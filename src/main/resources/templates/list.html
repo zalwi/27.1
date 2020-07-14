@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista produktów</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div style="padding-left: 5%; padding-right: 5%; padding-top: 2%">
+    <div class="header">
+        <h1>27.1 Budżet domowy</h1>
+    </div>
+    <div class="content">
+        <h2 th:text="'Typ: ' + ${listDescription}">Nazwa kategorii</h2>
+        <br>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Numer</th>
+                <th scope="col">Typ</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Data i czas</th>
+                <th scope="col">Akcja</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${items}">
+                <td>
+                    <p th:text="${item.id}">id</p>
+                </td>
+                <td>
+                    <p th:text="${item.type.description}">type</p>
+                </td>
+                <td>
+                    <p th:text="${item.description}">description</p>
+                </td>
+                <td>
+                    <p th:text="${item.amount}">amount</p>
+                </td>
+                <td>
+                    <p th:text="${item.sqlDateTimeFormat()}">zonedDateTime</p>
+                </td>
+                <td>
+                    <a th:href="@{'/update?id=' + ${item.id}}" class="category-item">Edytuj</a> / <a th:href="@{'/remove?id=' + ${item.id}}" class="category-item">Usuń</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <a href="/">Powrót do strony głównej</a>
+    </div>
+</div>
+</body>
+</html>

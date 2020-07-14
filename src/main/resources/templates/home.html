@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona główna</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div style="padding-left: 5%; padding-right: 5%; padding-top: 2%">
+    <div class="header">
+        <h1>27.1 Budżet domowy</h1>
+    </div>
+    <div class="content">
+        <h2>Wybierz akcję:</h2>
+        <br>
+        <a href="/new" class="category-item">
+            <div class="category-info ml-2">
+                <p>Dodawanie transakcji</p>
+            </div>
+        </a>
+        <a href="/modify" class="category-item">
+            <div class="category-info ml-2">
+                <p>Modyfikacja transakcji</p>
+            </div>
+        </a>
+        <a href="/delete" class="category-item">
+            <div class="category-info ml-2">
+                <p>Usuwanie transakcji</p>
+            </div>
+        </a>
+        <a th:href="@{'/list?type=' + ${income} }" class="category-item">
+            <div class="category-info ml-2">
+                <p>Wszystkie przychody</p>
+            </div>
+        </a>
+        <a th:href="@{'/list?type=' + ${expense} }" class="category-item">
+            <div class="category-info ml-2">
+                <p>Wszystkie wydatki</p>
+            </div>
+        </a>
+        <a href="/list" class="category-item">
+            <div class="category-info ml-2">
+                <p>Wszystkie transakcje</p>
+            </div>
+        </a>
+
+
+    </div>
+</div>
+</body>
+</html>

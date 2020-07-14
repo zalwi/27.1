@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transakcja</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous">
+</head>
+<body>
+<div style="padding-left: 5%; padding-right: 5%; padding-top: 2%">
+    <div class="header">
+        <h1>27.1 Budżet domowy</h1>
+    </div>
+    <form action="/add" method="post" style="width: 50%">
+        <div>
+            <h2 th:text="${actionDescription}">DODAJ AKCJĘ</h2>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="inputId">Numer</label>
+            <input type="number" class="form-control" step="1" id="inputId" placeholder="Numer transakcji zostanie nadany automatycznie" name="id" required th:readonly="${isIdBlocked}" th:value="${id}">
+        </div>
+        <div class="form-group">
+            <label for="inputName">Nazwa</label>
+            <input type="text" class="form-control" id="inputName" placeholder="Opis transakcji" name="description" required th:value="${description}">
+        </div>
+        <div class="form-group">
+            <label for="inputAmount">Cena</label>
+            <input type="number" class="form-control" step=".01" id="inputAmount" placeholder="Podaj kwotę transakcji" name="amount" required th:value="${amount}">
+        </div>
+        <div class="form-group">
+            <label for="inputDatetime">Data i czas</label>
+            <input class="form-control" type="datetime-local" id="inputDatetime" name="datetime" required th:value="${datetime}">
+        </div>
+            <div class="form-group">
+                <label for="type">Typ</label>
+                <select id="type" class="form-control" name="type" required>
+                    <option value="" selected disabled>
+                        Wybierz typ transakcji
+                    </option>
+                    <option
+                            th:if="${oldType != null}"
+                            th:value="${oldType}"
+                            th:text="'Poprzednia wartość: '+${oldType.description}"
+                            selected disabled>
+                        Wybierz typ transakcji..
+                    </option>
+                    <option th:each="type: ${types}" th:value="${type}" th:text="${type.getDescription()}">
+                    </option>
+                </select>
+            </div>
+        <button type="submit" class="btn btn-primary" th:text="${action}">Typ akcji</button>
+    </form>
+    <a href="/">powrót do strony głównej</a>
+</div>
+</body>
+</html>
