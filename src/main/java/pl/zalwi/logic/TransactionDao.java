@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.zalwi.data.Transaction;
 import pl.zalwi.data.TransactionType;
 
+import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.ZoneId;
@@ -136,7 +137,7 @@ public class TransactionDao {
             exception.printStackTrace();
         }
     }
-
+    @PreDestroy
     public void close() {
         try {
             connection.close();
