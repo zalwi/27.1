@@ -7,6 +7,7 @@ import pl.zalwi.logic.TransactionDao;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public class MainDaoTest {
@@ -16,19 +17,40 @@ public class MainDaoTest {
                 ));
 
         TransactionDao transactionDao = new TransactionDao();
-        // create
+//         create
+//        transactionDao.create(transaction);
 //        transactionDao.create(transaction);
 
-        // read
+//         read
 //        Optional<Transaction> optionalTransaction = transactionDao.read(1);
 //        if(optionalTransaction.isPresent()){
 //            System.out.println(optionalTransaction.get());
 //        }
-
-        //update
+//
+//        update
 //        transactionDao.update(transaction);
-        //delete
-        transactionDao.delete(1);
+//
+//        delete
+//        transactionDao.delete(1);
+//
+//        download all types
+//        Optional<List<Transaction>> optionalTransactionList = transactionDao.readList(null);
+//        if(optionalTransactionList.isPresent()){
+//            List<Transaction> transactions = optionalTransactionList.get();
+//            for(Transaction tr: transactions){
+//                System.out.println("Pobrano: " + tr);
+//            }
+//        }
+        // download specific type
+        Optional<List<Transaction>> optionalTransactionList = transactionDao.readList(TransactionType.INCOME);
+        if(optionalTransactionList.isPresent()){
+            List<Transaction> transactions = optionalTransactionList.get();
+            for(Transaction tr: transactions){
+                System.out.println("Pobrano: " + tr);
+            }
+        }else{
+            System.out.println("Brak wyników");
+        }
 
         transactionDao.close();
 
