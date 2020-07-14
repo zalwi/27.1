@@ -59,9 +59,11 @@ public class TransactionController {
     public String newTransaction(Model model) {
         model.addAttribute("actionDescription", "Dodawanie transakcji");
         model.addAttribute("action", "Dodaj");
+        model.addAttribute("actionLink", "add");
         model.addAttribute("types", TransactionType.values());
         model.addAttribute("isIdBlocked", true);
         model.addAttribute("id", null);
+        model.addAttribute("isBlocked", false);
         return "transactionForm";
     }
 
@@ -77,6 +79,7 @@ public class TransactionController {
 
         model.addAttribute("actionDescription", "Modyfikowanie transakcji");
         model.addAttribute("action", "Modyfikuj");
+        model.addAttribute("actionLink", "modify");
         model.addAttribute("isIdBlocked", true);
         model.addAttribute("id", transaction.getId());
         model.addAttribute("oldType", transaction.getType());
@@ -84,6 +87,31 @@ public class TransactionController {
         model.addAttribute("description", transaction.getDescription());
         model.addAttribute("amount", transaction.getAmount());
         model.addAttribute("datetime", transaction.htmlDateTimeFormat());
+        model.addAttribute("isBlocked", false);
+        return "transactionForm";
+    }
+
+    @GetMapping("/remove")
+    public String removeTransaction(@RequestParam(name = "id") Long id, Model model) {
+
+        Transaction transaction = new Transaction(3L,
+                TransactionType.EXPENSE,
+                "Wędka",
+                new BigDecimal("359"),
+                ZonedDateTime.of(2020, 7, 9, 8, 45, 42, 0, ZoneId.systemDefault()
+                ));
+
+        model.addAttribute("actionDescription", "Usuwanie transakcji");
+        model.addAttribute("action", "Usuń");
+        model.addAttribute("actionLink", "delete");
+        model.addAttribute("isIdBlocked", true);
+        model.addAttribute("id", transaction.getId());
+        model.addAttribute("oldType", transaction.getType());
+        model.addAttribute("types", TransactionType.values());
+        model.addAttribute("description", transaction.getDescription());
+        model.addAttribute("amount", transaction.getAmount());
+        model.addAttribute("datetime", transaction.htmlDateTimeFormat());
+        model.addAttribute("isBlocked", true);
         return "transactionForm";
     }
 
@@ -95,11 +123,27 @@ public class TransactionController {
                                     Model model) {
         ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTime+":00+00:00[Europe/Warsaw]");
         Transaction transaction = new Transaction(type, description,amount,zonedDateTime);
-        System.out.println(transaction);
-
+        System.out.println("Dodawanie: " + transaction);
         return "redirect:/list";
     }
 
+    @PostMapping("/modify")
+    public String modifyTransaction(@RequestParam(name = "id") Long id,
+                                    @RequestParam(name = "type") TransactionType type,
+                                    @RequestParam(name = "description")  String description,
+                                    @RequestParam(name = "amount")  BigDecimal amount,
+                                    @RequestParam(name = "datetime")  String dateTime,
+                                    Model model) {
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTime+":00+00:00[Europe/Warsaw]");
+        Transaction transaction = new Transaction(id, type, description,amount,zonedDateTime);
+        System.out.println("Modyfikacja: " + transaction);
+        return "redirect:/list";
+    }
 
+    @PostMapping("/delete")
+    public String deleteTransaction(@RequestParam(name = "id") Long id) {
+        System.out.println("Do usunięcia: " + id);
+        return "redirect:/list";
+    }
 
 }
