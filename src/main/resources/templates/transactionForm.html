@@ -20,19 +20,19 @@
         <br>
         <div class="form-group">
             <label for="inputId">Numer</label>
-            <input type="number" class="form-control" step="1" id="inputId" placeholder="Numer transakcji zostanie nadany automatycznie" name="id" required th:readonly="${isIdBlocked}" th:value="${id}">
+            <input type="number" class="form-control" step="1" id="inputId" placeholder="Numer transakcji zostanie nadany automatycznie" name="id" required readonly th:value="${transaction?.id}">
         </div>
         <div class="form-group">
             <label for="inputName">Nazwa</label>
-            <input type="text" class="form-control" id="inputName" placeholder="Opis transakcji" name="description" required th:value="${description}" th:readonly="${isBlocked}">
+            <input type="text" class="form-control" id="inputName" placeholder="Opis transakcji" name="description" required th:value="${transaction?.description}" th:readonly="${isBlocked}">
         </div>
         <div class="form-group">
             <label for="inputAmount">Cena</label>
-            <input type="number" class="form-control" step=".01" id="inputAmount" placeholder="Podaj kwotę transakcji" name="amount" required th:value="${amount}" th:readonly="${isBlocked}">
+            <input type="number" class="form-control" step=".01" id="inputAmount" placeholder="Podaj kwotę transakcji" name="amount" required th:value="${transaction?.amount}" th:readonly="${isBlocked}">
         </div>
         <div class="form-group">
             <label for="inputDatetime">Data i czas</label>
-            <input class="form-control" type="datetime-local" id="inputDatetime" name="datetime" required th:value="${datetime}" th:readonly="${isBlocked}">
+            <input class="form-control" type="datetime-local" id="inputDatetime" name="datetime" required th:value="${transaction?.localDateTime}" th:readonly="${isBlocked}">
         </div>
             <div class="form-group">
                 <label for="type">Typ</label>
@@ -41,13 +41,13 @@
                         Wybierz typ transakcji
                     </option>
                     <option
-                            th:if="${oldType != null}"
-                            th:value="${oldType}"
-                            th:text="'Poprzednia wartość: '+${oldType.description}"
+                            th:if="${transaction?.type != null}"
+                            th:value="${transaction?.type}"
+                            th:text="'Poprzednia wartość: '+${transaction?.type?.description}"
                             selected>
                         Poprzednia wartość
                     </option>
-                    <option th:if="${action} != 'Usuń'" th:each="type: ${types}" th:value="${type}" th:text="${type.getDescription()}">
+                    <option th:if="${action} != 'Usuń'" th:each="type: ${T(pl.zalwi.data.TransactionType).values()}" th:value="${type}" th:text="${type.getDescription()}">
                     </option>
                 </select>
             </div>

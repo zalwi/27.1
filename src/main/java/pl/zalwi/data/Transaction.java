@@ -1,29 +1,29 @@
 package pl.zalwi.data;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Transaction {
-    private Long id;                            // - automatycznie zwiększający się identyfikator rekordu
-    private TransactionType type;               // - typ wpisu - wydatek lub przychód
-    private String description;                 // - opis transakcji
-    private BigDecimal amount;                  // - kwota transakcji
-    private ZonedDateTime zonedDateTime;         // - data transakcji
+    private Long id;
+    private TransactionType type;
+    private String description;
+    private BigDecimal amount;
+    private LocalDateTime localDateTime;
 
-    public Transaction(TransactionType type, String description, BigDecimal amount, ZonedDateTime zonedDateTime) {
+    public Transaction(TransactionType type, String description, BigDecimal amount, LocalDateTime localDateTime) {
         this.type = type;
         this.description = description;
         this.amount = amount;
-        this.zonedDateTime = zonedDateTime;
+        this.localDateTime = localDateTime;
     }
 
-    public Transaction(Long id, TransactionType type, String description, BigDecimal amount, ZonedDateTime zonedDateTime) {
+    public Transaction(Long id, TransactionType type, String description, BigDecimal amount, LocalDateTime localDateTime) {
         this.id = id;
         this.type = type;
         this.description = description;
         this.amount = amount;
-        this.zonedDateTime = zonedDateTime;
+        this.localDateTime = localDateTime;
     }
 
     public Long getId() {
@@ -42,18 +42,12 @@ public class Transaction {
         return amount;
     }
 
-    public ZonedDateTime getZonedDateTime() {
-        return zonedDateTime;
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public String sqlDateTimeFormat(){
-        return zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
-    public String htmlDateTimeFormat(){
-        return  zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                + "T" +
-                zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+    public String getSqlDateTimeFormat() {
+        return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Override
@@ -63,7 +57,7 @@ public class Transaction {
                 ", type=" + type +
                 ", description='" + description + '\'' +
                 ", amount=" + amount +
-                ", zonedDateTime=" + zonedDateTime +
+                ", zonedDateTime=" + localDateTime +
                 '}';
     }
 }
